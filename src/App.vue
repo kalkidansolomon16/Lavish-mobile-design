@@ -24,7 +24,7 @@ function open(item) {
 function switchRole(r) { state.role = r; reset(r === 'student' ? 's-home' : 'home') }
 
 const scale = ref(1)
-const fit = () => (scale.value = Math.min(1, (window.innerHeight - 40) / 864))
+const fit = () => (scale.value = Math.min(1, (window.innerHeight - 72) / 864))
 // Deep links: #gallery opens the overview, #<screen> (e.g. #shop) opens that screen.
 function fromHash() {
   const h = decodeURIComponent(location.hash.slice(1))
