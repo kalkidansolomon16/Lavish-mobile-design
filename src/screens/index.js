@@ -162,10 +162,10 @@ export const FLOWS = [
     { s: 's-home', label: 'Student home', note: 'Course progress, next session, certificate and the latest message from the teacher.' },
     { s: 's-courses', label: 'Courses', note: 'Academy catalogue filtered by level.', web: 'Learning paths are managed in General Manager → Academy.' },
     { s: 'course', label: 'Course detail', params: { id: 3 }, note: 'About, modules, schedule, fee and entry requirements. No in-app applications — “Call to enrol” phones the academy.', web: 'The CEO adds the course to the student in CEO → Academy → Students.' },
-    { s: 'my-course', label: 'My course', params: { id: 1 }, note: 'Progress, schedule, modules with videos and exercises, and teachers.', web: 'Modules come from the GM’s learning path; the teacher adds videos, exercises and classes in Academy Teacher → Modules / Schedule.' },
-    { s: 'lesson', label: 'Lesson · video & exercise', params: { course: 1, week: 5 }, note: 'Watch the module video, download notes and submit the exercise.', web: 'Teacher grades submissions in Academy Teacher → Students.' },
+    { s: 'my-course', label: 'My course', params: { id: 1 }, note: 'Progress, schedule, modules with videos and exercises, and teachers.', web: 'Modules come from the GM’s learning path; the teacher adds videos, exercises and classes in the Lavish Academy portal → Modules / Schedule.' },
+    { s: 'lesson', label: 'Lesson · video & exercise', params: { course: 1, week: 5 }, note: 'Watch the module video, download notes and submit the exercise.', web: 'Teacher grades submissions in the Lavish Academy portal → Students.' },
     { s: 'certificate', label: 'Certificate (PDF)', params: { id: 4 }, note: 'Soft-copy certificate the student can download or share.', web: 'Issued by the General Manager in Academy → Certificates (also printable).' },
-    { s: 's-chat', label: 'Chat with teacher', note: 'Students chat with the doctors who teach their course.', web: 'Teachers answer from Academy Teacher → Students.' },
+    { s: 's-chat', label: 'Chat with teacher', note: 'Students chat with the doctors who teach their course.', web: 'Teachers answer from the Lavish Academy portal → Students.' },
     { s: 's-profile', label: 'Student profile', note: 'Enrolled courses, certificates and fee status.' },
   ] },
 ]
