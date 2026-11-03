@@ -1,11 +1,10 @@
 <script setup>
 import { computed } from 'vue'
-import { state, go, course, fmtDate, etb, enrollment, doctor } from '../store'
+import { state, go, course, etb, enrollment, doctor } from '../store'
 import Avatar from '../components/Avatar.vue'
 
 const active = computed(() => state.enrollments.filter((e) => e.status === 'active'))
 const cert = computed(() => state.enrollments.find((e) => e.certificate))
-const pending = computed(() => state.enrollments.filter((e) => e.status === 'pending'))
 const lastMsg = computed(() => state.chats.teacher.filter((m) => m.from === 'them').at(-1))
 const teacher = doctor(1)
 const explore = computed(() => state.courses.filter((c) => !enrollment(c.id)))
@@ -46,9 +45,6 @@ const explore = computed(() => state.courses.filter((c) => !enrollment(c.id)))
           <span class="ms">chevron_right</span>
         </button>
 
-        <div v-for="e in pending" :key="e.courseId" class="banner warn mt12" style="cursor: pointer" @click="go('course', { id: e.courseId })">
-          <span class="ms">hourglass_top</span><span class="grow"><b>{{ course(e.courseId).title }}</b><br />Application sent {{ fmtDate(e.applied) }} — awaiting General Manager review</span>
-        </div>
 
         <div class="sec"><h4>Message from your teacher</h4><a class="link" @click="go('s-chat')">Open chat</a></div>
         <button class="card row top" style="width: 100%; text-align: left" @click="go('s-chat')">

@@ -5,6 +5,7 @@ import Welcome from './Welcome.vue'
 import Register from './Register.vue'
 import Otp from './Otp.vue'
 import Login from './Login.vue'
+import SetPassword from './SetPassword.vue'
 import Home from './Home.vue'
 import Doctors from './Doctors.vue'
 import DoctorDetail from './DoctorDetail.vue'
@@ -33,7 +34,6 @@ import Notifications from './Notifications.vue'
 import StudentHome from './StudentHome.vue'
 import Courses from './Courses.vue'
 import CourseDetail from './CourseDetail.vue'
-import Apply from './Apply.vue'
 import MyCourse from './MyCourse.vue'
 import StudentProfile from './StudentProfile.vue'
 import NewsItem from './NewsItem.vue'
@@ -47,6 +47,7 @@ export const SCREENS = {
   register: { c: Register },
   otp: { c: Otp },
   login: { c: Login },
+  'set-password': { c: SetPassword },
 
   home: { c: Home, role: 'client', tab: 'home', light: true },
   doctors: { c: Doctors, role: 'client', tab: 'doctors' },
@@ -80,7 +81,6 @@ export const SCREENS = {
   's-chat': { c: ChatRoom, role: 'student', tab: 's-chat' },
   's-profile': { c: StudentProfile, role: 'student', tab: 's-profile', light: true },
   course: { c: CourseDetail, role: 'student', light: true },
-  apply: { c: Apply, role: 'student' },
   'my-course': { c: MyCourse, role: 'student' },
   lesson: { c: Lesson, role: 'student', light: true },
   certificate: { c: Certificate, role: 'student' },
@@ -106,11 +106,12 @@ const RX = 'Doctor → Prescriptions'
 export const FLOWS = [
   { group: 'Onboarding', icon: 'login', items: [
     { s: 'splash', label: 'Splash', note: 'Shown while the app checks for a saved login token. Auto-advances to Welcome (or Home if already logged in).' },
-    { s: 'welcome', label: 'Welcome', note: 'First launch. The user picks whether they are a client or a student — this decides which app they get after sign-up.' },
-    { s: 'register', label: 'Register · client', params: { role: 'client' }, note: 'Client sign-up. Phone number is the login. Branch preference helps reception schedule.', web: 'New clients appear in Reception → Clients.' },
-    { s: 'register', label: 'Register · student', params: { role: 'student' }, note: 'Student sign-up with course of interest and education level.', web: 'New students appear in General Manager → Academy as applicants.' },
+    { s: 'welcome', label: 'Welcome', note: 'First launch. Clients sign up; students go straight to login — they don’t register in the app.' },
+    { s: 'register', label: 'Register · client', note: 'Client sign-up only. Phone number is the login. Branch preference helps reception schedule.', web: 'New clients appear in Reception → Clients.' },
     { s: 'otp', label: 'Verify phone (OTP)', params: { role: 'client' }, note: 'SMS one-time code verifies the phone number before the account is active.' },
     { s: 'login', label: 'Log in', note: 'Phone + password. The API returns the role (client or student) and the app opens the matching home.' },
+    { s: 'login', label: 'Student login', params: { role: 'student' }, note: 'Students enrol in person or by calling the CEO, who creates their login and gives them a temporary password.', web: 'CEO → Academy → Students → Add student (also resets forgotten passwords).' },
+    { s: 'set-password', label: 'Student · set password', note: 'First login: the student replaces the temporary password from the academy.' },
   ] },
   { group: 'Client · Book a doctor', icon: 'calendar_month', items: [
     { s: 'home', label: 'Home', note: 'Next confirmed appointment, pending requests, quick actions, new prescriptions, news from Lavish and featured treatments/products.', web: 'News is posted by the CEO or General Manager in Web → News.' },
@@ -158,16 +159,13 @@ export const FLOWS = [
     { s: 'profile', label: 'Profile', note: 'Account summary and links to appointments, orders, prescriptions, payments and complaints.' },
   ] },
   { group: 'Student · Academy', icon: 'school', items: [
-    { s: 's-home', label: 'Student home', note: 'Course progress, next session, certificate, pending applications and the latest message from the teacher.' },
+    { s: 's-home', label: 'Student home', note: 'Course progress, next session, certificate and the latest message from the teacher.' },
     { s: 's-courses', label: 'Courses', note: 'Academy catalogue filtered by level.', web: 'Learning paths are managed in General Manager → Academy.' },
-    { s: 'course', label: 'Course detail', params: { id: 3 }, note: 'About, modules, schedule, fee and entry requirements.' },
-    { s: 'apply', label: 'Apply for a course', params: { id: 3 }, note: 'Education, experience, preferred group, motivation and documents. No payment until approved.' },
-    { s: 'success', label: 'Application sent', params: SUCCESS.application(course(3)), note: 'Explains next steps: General Manager review → pay fee → start.', web: 'Appears in General Manager → Academy → Students; the GM enrols or declines.' },
-    { s: 'course', label: 'Course · under review', params: { id: 2 }, note: 'Pending application state.' },
+    { s: 'course', label: 'Course detail', params: { id: 3 }, note: 'About, modules, schedule, fee and entry requirements. No in-app applications — “Call to enrol” phones the academy.', web: 'The CEO adds the course to the student in CEO → Academy → Students.' },
     { s: 'my-course', label: 'My course', params: { id: 1 }, note: 'Progress, schedule, modules with videos and exercises, and teachers.', web: 'Modules come from the GM’s learning path; the teacher adds videos, exercises and classes in Academy Teacher → Modules / Schedule.' },
     { s: 'lesson', label: 'Lesson · video & exercise', params: { course: 1, week: 5 }, note: 'Watch the module video, download notes and submit the exercise.', web: 'Teacher grades submissions in Academy Teacher → Students.' },
     { s: 'certificate', label: 'Certificate (PDF)', params: { id: 4 }, note: 'Soft-copy certificate the student can download or share.', web: 'Issued by the General Manager in Academy → Certificates (also printable).' },
     { s: 's-chat', label: 'Chat with teacher', note: 'Students chat with the doctors who teach their course.', web: 'Teachers answer from Academy Teacher → Students.' },
-    { s: 's-profile', label: 'Student profile', note: 'Enrolled courses, applications and fee status.' },
+    { s: 's-profile', label: 'Student profile', note: 'Enrolled courses, certificates and fee status.' },
   ] },
 ]

@@ -5,7 +5,7 @@ import AppBar from '../components/AppBar.vue'
 
 const lvl = ref('All')
 const list = computed(() => state.courses.filter((c) => lvl.value === 'All' || c.level === lvl.value))
-const tag = (c) => ({ active: 'enrolled', pending: 'pending' })[enrollment(c.id)?.status]
+const tag = (c) => ({ active: 'enrolled', completed: 'completed' })[enrollment(c.id)?.status]
 </script>
 
 <template>

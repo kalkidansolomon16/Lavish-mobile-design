@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { go, back, course, enrollment, doctor, etb, fmtDate } from '../store'
+import { go, back, course, enrollment, doctor, etb, fmtDate, ACADEMY_PHONE } from '../store'
 import Avatar from '../components/Avatar.vue'
 
 const p = defineProps({ params: Object })
@@ -44,13 +44,13 @@ const e = computed(() => enrollment(c.id))
           <div v-for="id in c.teacherIds" :key="id" class="li"><Avatar :name="doctor(id).name" :hue="doctor(id).hue" :size="42" /><span class="grow"><b>{{ doctor(id).name }}</b><small>{{ doctor(id).specialty }} · {{ doctor(id).years }} years</small></span></div>
         </div>
         <p class="small muted mt8">Once enrolled, you can chat with your teachers in the app.</p>
+        <div v-if="!e" class="banner mt16"><span class="ms">info</span><span>To join this course, visit the academy or call {{ ACADEMY_PHONE }}. We’ll enrol you and add the course to your account.</span></div>
       </div>
     </div>
     <div class="foot">
       <button v-if="e?.status === 'active'" class="btn" @click="go('my-course', { id: c.id })"><span class="ms">play_circle</span>Open my course</button>
       <button v-else-if="e?.status === 'completed'" class="btn gold" @click="go('certificate', { id: c.id })"><span class="ms">workspace_premium</span>View certificate</button>
-      <button v-else-if="e?.status === 'pending'" class="btn soft" disabled><span class="ms">hourglass_top</span>Application under review</button>
-      <button v-else class="btn" @click="go('apply', { id: c.id })">Apply now · {{ etb(c.price) }}</button>
+      <a v-else class="btn" :href="'tel:' + ACADEMY_PHONE.replace(/ /g, '')"><span class="ms">call</span>Call to enrol · {{ etb(c.price) }}</a>
     </div>
   </div>
 </template>

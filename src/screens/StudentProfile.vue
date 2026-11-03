@@ -14,7 +14,7 @@ import Avatar from '../components/Avatar.vue'
       <div class="pad">
         <div class="stats lift">
           <div><b>{{ state.enrollments.filter((e) => e.status === 'active').length }}</b><small>Active</small></div>
-          <div><b>{{ state.enrollments.filter((e) => e.status === 'pending').length }}</b><small>Applications</small></div>
+          <div><b>{{ state.enrollments.filter((e) => e.status === 'completed').length }}</b><small>Completed</small></div>
           <div><b>{{ state.enrollments.filter((e) => e.certificate).length }}</b><small>Certificates</small></div>
         </div>
 
@@ -22,7 +22,7 @@ import Avatar from '../components/Avatar.vue'
         <div class="list">
           <button v-for="e in state.enrollments" :key="e.courseId" class="li" @click="e.status === 'active' ? go('my-course', { id: e.courseId }) : e.certificate ? go('certificate', { id: e.courseId }) : go('course', { id: e.courseId })">
             <span class="ic sm gold"><span class="ms">school</span></span>
-            <span class="grow"><b class="ellip">{{ course(e.courseId).title }}</b><small>{{ e.paid ? 'Fee paid' : 'Fee ' + etb(course(e.courseId).price) + ' · after approval' }}</small></span>
+            <span class="grow"><b class="ellip">{{ course(e.courseId).title }}</b><small>{{ e.paid ? 'Fee paid' : 'Fee ' + etb(course(e.courseId).price) + ' · pay at the academy' }}</small></span>
             <span class="badge" :class="e.status === 'active' ? 'enrolled' : e.status">{{ e.status === 'active' ? 'enrolled' : e.certificate ? 'certificate' : e.status }}</span>
           </button>
         </div>

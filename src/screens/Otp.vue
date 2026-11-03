@@ -5,9 +5,9 @@ import AppBar from '../components/AppBar.vue'
 const p = defineProps({ params: Object })
 const digits = ['4', '8', '2', '7', '', '']
 function verify() {
-  state.role = p.params.role || 'client'
-  reset(state.role === 'student' ? 's-home' : 'home')
-  notify(state.role === 'student' ? 'Welcome to Lavish Academy!' : 'Welcome to Lavish!')
+  state.role = 'client'
+  reset('home')
+  notify('Welcome to Lavish!')
 }
 </script>
 

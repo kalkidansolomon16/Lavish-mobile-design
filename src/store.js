@@ -12,6 +12,8 @@ export const slug = (s) => String(s).toLowerCase().replace(/\s+/g, '-')
 
 export const BRANCHES = ['Addis Ababa – Bole', 'Addis Ababa – Kazanchis', 'Hawassa']
 export const DELIVERY_FEE = 150
+// Students enrol in person or by calling the CEO's office — there's no student sign-up in the app.
+export const ACADEMY_PHONE = '+251 911 00 11 22'
 
 export const SERVICES = [
   { name: 'Signature HydraFacial', price: 4500, mins: 60, icon: 'spa' },
@@ -122,10 +124,9 @@ export const state = reactive({
       modules: ['Laser physics & safety', 'Skin typing', 'Treatment protocols', 'Practical sessions', 'Certification'] },
   ],
 
-  // The General Manager approves "pending" applications and issues certificates in the web app.
+  // Created by the CEO in the web app when the student enrols; the General Manager issues certificates.
   enrollments: [
     { courseId: 1, status: 'active', progress: 62, week: 5, paid: true },
-    { courseId: 2, status: 'pending', progress: 0, applied: day(-2), paid: false },
     { courseId: 4, status: 'completed', progress: 100, paid: true, certificate: { no: 'LA-2026-0001', date: day(-40), by: 'Dawit Haile' } },
   ],
 
@@ -144,7 +145,7 @@ export const state = reactive({
   news: [
     { id: 1, title: 'New: Morpheus8 now at Kazanchis', body: 'Our most requested skin-tightening treatment is now available at the Kazanchis branch. Book it from the app with Dr. Meron or Dr. Yonas.', tag: 'New treatment', date: day(-1), hue: 185, icon: 'auto_awesome' },
     { id: 2, title: '20% off aftercare this week', body: 'All Aftercare products are 20% off in the Lavish shop until Sunday. The discount is applied automatically at checkout.', tag: 'Offer', date: day(-3), hue: 25, icon: 'sell' },
-    { id: 3, title: 'Lavish Academy: December intake', body: 'Applications for the December Medical Aesthetics Foundations intake are open. Switch to a student account to apply.', tag: 'Academy', date: day(-6), hue: 160, icon: 'school' },
+    { id: 3, title: 'Lavish Academy: December intake', body: 'Enrolment for the December Medical Aesthetics Foundations intake is open. Visit the academy or call us to register — we’ll give you your student login.', tag: 'Academy', date: day(-6), hue: 160, icon: 'school' },
   ],
 })
 
@@ -220,7 +221,6 @@ export const actions = {
     }, 1600)
   },
   submitExercise(l) { l.exercise.status = 'submitted'; notify('Exercise sent to your teacher') },
-  applyCourse(courseId) { state.enrollments.push({ courseId, status: 'pending', progress: 0, applied: today, paid: false }) },
 }
 
 // Content for the shared "success" screen after each flow.
@@ -257,12 +257,5 @@ export const SUCCESS = {
     steps: [{ t: 'Submitted', d: 'Just now', done: true }, { t: 'In review by client care', d: 'Usually within 24 hours', now: true }, { t: 'Resolved', d: 'You’ll get a notification' }],
     primary: { label: 'View complaint', to: 'complaint', params: { id: c.id } },
     secondary: { label: 'Back to home' },
-  }),
-  application: (c) => ({
-    icon: 'school', title: 'Application sent!',
-    text: `The General Manager will review your application for ${c.title}. You’ll get a notification with the decision.`,
-    steps: [{ t: 'Application sent', d: 'Just now', done: true }, { t: 'General Manager reviews', d: 'Within 2 working days', now: true }, { t: 'Pay course fee', d: etb(c.price) }, { t: 'Start learning', d: fmtDate(c.start, { day: 'numeric', month: 'long' }) }],
-    primary: { label: 'Back to home', to: 's-home' },
-    secondary: { label: 'Back to courses', to: 's-courses' },
   }),
 }
