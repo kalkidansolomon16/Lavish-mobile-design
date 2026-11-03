@@ -1,5 +1,5 @@
 <script setup>
-import { state, go, product, fmtDate, etb } from '../store'
+import { state, go, product, fmtDate, etb, orderStep, ORDER_FLOW } from '../store'
 import AppBar from '../components/AppBar.vue'
 import ProductArt from '../components/ProductArt.vue'
 </script>
@@ -10,7 +10,8 @@ import ProductArt from '../components/ProductArt.vue'
     <div class="body">
       <div class="stack">
         <button v-for="o in state.orders" :key="o.id" class="card" style="text-align: left" @click="go('order', { id: o.id })">
-          <div class="row between"><b style="font-weight: 500">Order #{{ o.id }}</b><span class="badge" :class="o.status">{{ o.status === 'placed' ? 'On the way' : o.status }}</span></div>
+          <div class="row between"><b style="font-weight: 500">Order #{{ o.id }}</b><span class="badge" :class="o.status">{{ orderStep(o)?.t ?? o.status }}</span></div>
+          <div class="o-progress mt8"><i v-for="(s, i) in ORDER_FLOW" :key="s.key" :class="{ on: i <= ORDER_FLOW.indexOf(orderStep(o)) }"></i></div>
           <div class="row mt12" style="gap: 6px">
             <ProductArt v-for="l in o.lines" :key="l.productId" :product="product(l.productId)" :h="52" style="width: 52px; border-radius: 12px" />
           </div>

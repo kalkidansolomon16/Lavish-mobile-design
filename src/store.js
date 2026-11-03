@@ -12,6 +12,16 @@ export const slug = (s) => String(s).toLowerCase().replace(/\s+/g, '-')
 
 export const BRANCHES = ['Addis Ababa – Bole', 'Addis Ababa – Kazanchis', 'Hawassa']
 export const DELIVERY_FEE = 150
+// Delivery tracker — Lavish E-commerce moves the order along in the web app; each step is also emailed.
+export const ORDER_FLOW = [
+  { key: 'placed', t: 'Order placed', d: 'We received your order', icon: 'shopping_bag' },
+  { key: 'confirmed', t: 'Order confirmed', d: 'Confirmation sent to your email', icon: 'task_alt' },
+  { key: 'preparing', t: 'Preparing your order', d: 'Our team is packing your products', icon: 'inventory_2' },
+  { key: 'ready', t: 'Ready for delivery', d: 'Waiting for the courier', icon: 'package_2' },
+  { key: 'out', t: 'Out for delivery', d: 'On its way to you', icon: 'local_shipping' },
+  { key: 'delivered', t: 'Delivered', d: 'Enjoy your products!', icon: 'home' },
+]
+export const orderStep = (o) => ORDER_FLOW.find((s) => s.key === o.status)
 // Students enrol in person or by calling the CEO's office — there's no student sign-up in the app.
 export const ACADEMY_PHONE = '+251 911 00 11 22'
 
@@ -68,10 +78,16 @@ export const state = reactive({
 
   cart: [{ productId: 4, qty: 1 }, { productId: 3, qty: 1 }],
 
-  // Admin confirms delivery of "placed" orders in the web app.
+  // Lavish E-commerce updates the status in the web app; `history` holds the time of each step.
   orders: [
-    { id: 9001, lines: [{ productId: 1, qty: 1 }, { productId: 3, qty: 2 }], total: 6750, fee: 150, address: 'Bole, around Edna Mall, Addis Ababa', method: 'Pay on delivery', status: 'placed', date: today },
-    { id: 9003, lines: [{ productId: 2, qty: 2 }], total: 6550, fee: 150, address: 'Bole, around Edna Mall, Addis Ababa', method: 'Telebirr', status: 'delivered', date: day(-12) },
+    { id: 9001, lines: [{ productId: 1, qty: 1 }, { productId: 3, qty: 2 }], total: 6750, fee: 150, address: 'Bole, around Edna Mall, Addis Ababa', method: 'Pay on delivery', status: 'out', date: today,
+      courier: { name: 'Yared Bekele', phone: '+251 922 33 44 55' },
+      history: { placed: 'Today 08:05', confirmed: 'Today 08:40', preparing: 'Today 09:05', ready: 'Today 10:40', out: 'Today 11:05' } },
+    { id: 9002, lines: [{ productId: 4, qty: 1 }], total: 2550, fee: 150, address: 'Bole, around Edna Mall, Addis Ababa', method: 'Telebirr', status: 'preparing', date: today,
+      history: { placed: 'Today 09:12', confirmed: 'Today 09:30', preparing: 'Today 10:02' } },
+    { id: 9003, lines: [{ productId: 2, qty: 2 }], total: 6550, fee: 150, address: 'Bole, around Edna Mall, Addis Ababa', method: 'Telebirr', status: 'delivered', date: day(-12),
+      courier: { name: 'Yared Bekele', phone: '+251 922 33 44 55' },
+      history: { placed: fmtDate(day(-12)) + ' 14:20', confirmed: fmtDate(day(-12)) + ' 15:00', preparing: fmtDate(day(-12)) + ' 16:10', ready: fmtDate(day(-11)) + ' 09:00', out: fmtDate(day(-11)) + ' 10:15', delivered: fmtDate(day(-11)) + ' 12:30' } },
   ],
 
   prescriptions: [
@@ -106,6 +122,8 @@ export const state = reactive({
     { id: 2, icon: 'medication', title: 'New prescription', text: 'Dr. Meron Alemu sent you 2 products for your skin routine.', time: 'Yesterday', unread: true, to: 'prescription', params: { id: 1 } },
     { id: 3, icon: 'chat', title: 'Dr. Meron Alemu', text: 'Mild dryness is normal for 48h…', time: 'Mon', unread: false, to: 'chat', params: { key: 1 } },
     { id: 4, icon: 'support_agent', title: 'Reply to your complaint', text: 'Client care replied to “Long waiting time”.', time: '3d ago', unread: false, to: 'complaint', params: { id: 702 } },
+    { id: 6, icon: 'local_shipping', title: 'Out for delivery', text: 'Order #9001 is on its way with Yared Bekele. Please keep your phone nearby.', time: '1h ago', unread: true, to: 'order', params: { id: 9001 } },
+    { id: 7, icon: 'inventory_2', title: 'Your order is being prepared', text: 'Our team is packing order #9002.', time: '2h ago', unread: false, to: 'order', params: { id: 9002 } },
     { id: 5, icon: 'local_shipping', title: 'Order delivered', text: 'Order #9003 was delivered. Enjoy!', time: '12d ago', unread: false, to: 'order', params: { id: 9003 } },
   ],
 
@@ -195,7 +213,7 @@ export const actions = {
   },
   placeOrder({ address, method }) {
     const lines = state.cart.map((l) => ({ ...l }))
-    const o = { id: 9010 + state.orders.length, lines, total: linesTotal(lines) + DELIVERY_FEE, fee: DELIVERY_FEE, address, method, status: 'placed', date: today }
+    const o = { id: 9010 + state.orders.length, lines, total: linesTotal(lines) + DELIVERY_FEE, fee: DELIVERY_FEE, address, method, status: 'placed', date: today, history: { placed: 'Just now' } }
     state.orders.unshift(o)
     state.cart = []
     return o
@@ -246,7 +264,7 @@ export const SUCCESS = {
   }),
   order: (o) => ({
     icon: 'shopping_bag', title: 'Order placed!',
-    text: `Order #${o.id} is with our team. You'll be notified when it's confirmed and delivered.`,
+    text: `Order #${o.id} is with our team. We’ve emailed you a receipt, and you’ll get an email and a notification at every step — confirmed, preparing, out for delivery and delivered.`,
     receipt: [['Order', '#' + o.id], ['Items', o.lines.reduce((n, l) => n + l.qty, 0) + ' items'], ['Total', etb(o.total)], ['Payment', o.method], ['Deliver to', o.address]],
     primary: { label: 'Track order', to: 'order', params: { id: o.id } },
     secondary: { label: 'Continue shopping', to: 'shop' },

@@ -148,7 +148,8 @@ export const FLOWS = [
     { s: 'checkout', label: 'Checkout', note: 'Delivery address, courier phone and payment method.' },
     { s: 'success', label: 'Order placed', params: SUCCESS.order(state.orders[0]), note: 'Order confirmation.', web: 'New order appears in Lavish E-commerce → Orders.' },
     { s: 'orders', label: 'My orders', note: 'All orders with status.' },
-    { s: 'order', label: 'Order tracking', params: { id: 9001 }, note: 'Placed → confirmed → delivered.', web: 'Lavish E-commerce confirms delivery and payment; the client gets a notification here.' },
+    { s: 'order', label: 'Order tracking · out for delivery', params: { id: 9001 }, note: 'Delivery tracker: placed → confirmed → preparing → ready → out for delivery → delivered, with the time of each step and the courier’s contact.', web: 'Lavish E-commerce moves the order along in Orders → Track; every step emails the client and updates this screen.' },
+    { s: 'order', label: 'Order tracking · preparing', params: { id: 9002 }, note: 'Order is being prepared — status updates also arrive by email.' },
   ] },
   { group: 'Client · Complaints & account', icon: 'support_agent', items: [
     { s: 'complaints', label: 'My complaints', note: 'Status of every complaint and the latest reply.', web: 'The General Manager tracks these in General Manager → Complaints.' },

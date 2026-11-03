@@ -168,7 +168,7 @@ img { display: block; }
 
 .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; text-transform: capitalize; background: var(--mint); color: var(--teal-deep); white-space: nowrap; }
 .badge.approved, .badge.paid, .badge.delivered, .badge.resolved, .badge.active, .badge.available, .badge.completed, .badge.ordered, .badge.enrolled { background: #e1f1e8; color: var(--ok); }
-.badge.pending, .badge.placed, .badge.in-review, .badge.unpaid, .badge.medium, .badge.in-surgery { background: #fbefd5; color: var(--warn); }
+.badge.pending, .badge.placed, .badge.confirmed, .badge.preparing, .badge.ready, .badge.in-review, .badge.unpaid, .badge.medium, .badge.in-surgery { background: #fbefd5; color: var(--warn); }
 .badge.declined, .badge.open, .badge.high, .badge.rejected { background: #f6dedb; color: var(--bad); }
 .badge.cancelled, .badge.off-today, .badge.low { background: #ecebe9; color: var(--muted); }
 .badge.sent, .badge.new { background: var(--gold-soft); color: #8a6249; }
@@ -377,7 +377,8 @@ img { display: block; }
 .status-head b { font-family: 'EB Garamond', serif; font-size: 20px; display: block; font-weight: 600; }
 .status-head p { font-size: 13px; opacity: .9; margin-top: 2px; line-height: 1.4; }
 .st-approved, .st-completed, .st-delivered, .st-resolved, .st-active { background: #e1f1e8; color: #2d6b48; }
-.st-pending, .st-placed, .st-in-review { background: #fbefd5; color: #8a5f10; }
+.st-pending, .st-placed, .st-in-review, .st-confirmed, .st-preparing, .st-ready { background: #fbefd5; color: #8a5f10; }
+.st-out { background: var(--mint); color: var(--teal-deep); }
 .st-declined, .st-open { background: #f6dedb; color: var(--bad); }
 .st-cancelled { background: #ecebe9; color: var(--muted); }
 
@@ -445,3 +446,9 @@ img { display: block; }
 .cert-m p { font-size: 12px; color: var(--muted); }
 .cert-m .sig { display: flex; justify-content: space-between; margin-top: 18px; font-size: 10.5px; color: var(--muted); text-align: left; }
 .cert-m .sig b { display: block; font-family: 'EB Garamond', serif; font-size: 14px; color: var(--ink); border-top: 1px solid var(--line); padding-top: 4px; }
+
+/* order delivery progress */
+.badge.out { background: var(--mint); color: var(--teal-deep); }
+.o-progress { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+.o-progress i { height: 5px; border-radius: 3px; background: var(--line); }
+.o-progress i.on { background: var(--dark); }
