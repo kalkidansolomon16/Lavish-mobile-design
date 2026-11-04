@@ -17,7 +17,7 @@ const ACTIVITY = [
       <div class="teal-head prof-head">
         <Avatar :name="state.client.name" :hue="28" :size="80" />
         <h2>{{ state.client.name }}</h2>
-        <p>{{ state.client.phone }} · {{ state.client.branch.replace('Addis Ababa – ', '') }}</p>
+        <p>{{ state.client.phone }} · {{ state.client.branch }}</p>
       </div>
       <div class="pad">
         <div class="stats lift">

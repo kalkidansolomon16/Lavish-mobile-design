@@ -13,9 +13,9 @@ const lessonFor = (week) => lessons.find((l) => l.week === week)
 const done = computed(() => lessons.filter((l) => l.exercise.status === 'graded').length)
 const todo = computed(() => lessons.filter((l) => l.exercise.status === 'todo').length)
 const SESSIONS = [
-  { d: 'Sat', t: '10:00', title: 'Chemical peels — practical', where: 'Bole training room', kind: 'Practical' },
+  { d: 'Sat', t: '10:00', title: 'Chemical peels — practical', where: 'Addis Ababa training room', kind: 'Practical' },
   { d: 'Tue', t: '14:00', title: 'Microdermabrasion — theory', where: 'Online (Zoom)', kind: 'Theory' },
-  { d: 'Thu', t: '10:00', title: 'Microdermabrasion — practical', where: 'Bole training room', kind: 'Practical' },
+  { d: 'Thu', t: '10:00', title: 'Microdermabrasion — practical', where: 'Addis Ababa training room', kind: 'Practical' },
 ]
 const STATUS = { graded: ['Graded', 'completed'], submitted: ['Submitted', 'pending'], todo: ['To do', 'new'] }
 </script>

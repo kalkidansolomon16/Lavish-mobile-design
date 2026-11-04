@@ -5,7 +5,7 @@ import AppBar from '../components/AppBar.vue'
 import Avatar from '../components/Avatar.vue'
 
 const p = defineProps({ params: Object })
-const f = { doctorId: 1, service: 'Morpheus8 & Microneedling', date: day(3), time: '10:30', branch: 'Addis Ababa – Bole', note: '', ...p.params }
+const f = { doctorId: 1, service: 'Morpheus8 & Microneedling', date: day(3), time: '10:30', branch: 'Addis Ababa', note: '', ...p.params }
 const d = f.doctorId ? doctor(f.doctorId) : null
 const s = f.online ? ONLINE : service(f.service)
 const pay = ref('later')

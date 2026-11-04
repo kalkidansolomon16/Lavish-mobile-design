@@ -44,7 +44,7 @@ const list = computed(() => state.doctors.filter((d) =>
             <div class="muted small">{{ d.specialty }}</div>
             <div class="meta mt8">
               <span><span class="ms star">star</span>{{ d.rating }} ({{ d.reviews }})</span>
-              <span><span class="ms">location_on</span>{{ d.branch.replace('Addis Ababa – ', '') }}</span>
+              <span><span class="ms">location_on</span>{{ d.branch }}</span>
             </div>
             <div class="row between mt8"><span class="badge" :class="slug(d.status)">{{ d.status }}</span><button class="btn sm" @click.stop="go('book', { doctorId: d.id, service })">Book</button></div>
           </div>

@@ -58,7 +58,7 @@ function pickDate(x) { f.date = x; if (taken.value.includes(f.time)) f.time = ''
 
         <template v-if="!d">
           <div class="sec" style="margin-top: 20px"><h4>Branch</h4></div>
-          <div class="chips"><button v-for="b in BRANCHES" :key="b" class="chip" :class="{ on: f.branch === b }" @click="f.branch = b"><span class="ms">location_on</span>{{ b.replace('Addis Ababa – ', '') }}</button></div>
+          <div class="chips"><button v-for="b in BRANCHES" :key="b" class="chip" :class="{ on: f.branch === b }" @click="f.branch = b"><span class="ms">location_on</span>{{ b }}</button></div>
         </template>
       </template>
 

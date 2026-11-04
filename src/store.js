@@ -10,7 +10,7 @@ export const etb = (n) => `ETB ${n.toLocaleString()}`
 export const fmtDate = (d, o = { weekday: 'short', day: 'numeric', month: 'short' }) => new Date(d + 'T00:00').toLocaleDateString('en-GB', o)
 export const slug = (s) => String(s).toLowerCase().replace(/\s+/g, '-')
 
-export const BRANCHES = ['Addis Ababa – Bole', 'Addis Ababa – Kazanchis', 'Hawassa']
+export const BRANCHES = ['Addis Ababa', 'Adama', 'Dire Dawa']
 export const DELIVERY_FEE = 150
 // Delivery tracker — Lavish E-commerce moves the order along in the web app; each step is also emailed.
 export const ORDER_FLOW = [
@@ -48,26 +48,26 @@ export const state = reactive({
   toast: '',
   typing: false,
 
-  client: { name: 'Tigist Worku', phone: '+251 911 22 33 44', email: 'tigist.w@gmail.com', branch: 'Addis Ababa – Bole', joined: '2026-08-14' },
+  client: { name: 'Tigist Worku', phone: '+251 911 22 33 44', email: 'tigist.w@gmail.com', branch: 'Addis Ababa', joined: '2026-08-14' },
   student: { name: 'Eden Fikru', phone: '+251 912 45 67 89', email: 'eden.fikru@gmail.com', joined: '2026-09-01' },
 
   doctors: [
-    { id: 1, name: 'Dr. Meron Alemu', specialty: 'Dermatology', skills: ['Signature HydraFacial', 'PRP Skin Rejuvenation', 'Morpheus8 & Microneedling', 'Advanced Dermatology Treatments'], branch: 'Addis Ababa – Bole', status: 'Available', years: 9, rating: 4.9, reviews: 212, hue: 185,
+    { id: 1, name: 'Dr. Meron Alemu', specialty: 'Dermatology', skills: ['Signature HydraFacial', 'PRP Skin Rejuvenation', 'Morpheus8 & Microneedling', 'Advanced Dermatology Treatments'], branch: 'Addis Ababa', status: 'Available', years: 9, rating: 4.9, reviews: 212, hue: 185,
       bio: 'Board-certified dermatologist focused on skin health, acne scarring and non-surgical rejuvenation.', days: 'Mon – Sat' },
-    { id: 2, name: 'Dr. Yonas Tesfaye', specialty: 'Aesthetic Medicine', skills: ['Botox & Dermal Fillers', 'HIFU Face & Neck Lift', 'Signature HydraFacial'], branch: 'Addis Ababa – Bole', status: 'Available', years: 7, rating: 4.8, reviews: 164, hue: 25,
+    { id: 2, name: 'Dr. Yonas Tesfaye', specialty: 'Aesthetic Medicine', skills: ['Botox & Dermal Fillers', 'HIFU Face & Neck Lift', 'Signature HydraFacial'], branch: 'Addis Ababa', status: 'Available', years: 7, rating: 4.8, reviews: 164, hue: 25,
       bio: 'Aesthetic physician known for natural-looking injectables and lifting treatments.', days: 'Tue – Sun' },
-    { id: 3, name: 'Dr. Liya Getachew', specialty: 'Hair Transplant', skills: ['Hair Restoration Solutions'], branch: 'Addis Ababa – Kazanchis', status: 'In surgery', years: 11, rating: 4.9, reviews: 98, hue: 340,
+    { id: 3, name: 'Dr. Liya Getachew', specialty: 'Hair Transplant', skills: ['Hair Restoration Solutions'], branch: 'Adama', status: 'In surgery', years: 11, rating: 4.9, reviews: 98, hue: 340,
       bio: 'Hair restoration surgeon specialising in FUE transplants and PRP scalp therapy.', days: 'Mon – Fri' },
-    { id: 4, name: 'Dr. Biruk Mengistu', specialty: 'Body Transformation', skills: ['Body Contouring & Skin Tightening'], branch: 'Hawassa', status: 'Off today', years: 6, rating: 4.7, reviews: 73, hue: 140,
+    { id: 4, name: 'Dr. Biruk Mengistu', specialty: 'Body Transformation', skills: ['Body Contouring & Skin Tightening'], branch: 'Dire Dawa', status: 'Off today', years: 6, rating: 4.7, reviews: 73, hue: 140,
       bio: 'Body contouring specialist using non-invasive fat reduction and skin tightening.', days: 'Mon – Sat' },
   ],
 
   // The signed-in client's appointments. Reception approves "pending" ones in the web app.
   appointments: [
-    { id: 202, doctorId: 1, service: 'Morpheus8 & Microneedling', date: day(2), time: '11:30', branch: 'Addis Ababa – Bole', status: 'approved', note: 'Acne scars on cheeks.', payment: { amount: 12000, status: 'unpaid' } },
-    { id: 203, doctorId: 2, service: 'HIFU Face & Neck Lift', date: day(5), time: '10:00', branch: 'Addis Ababa – Bole', status: 'pending', note: '', payment: { amount: 15000, status: 'unpaid' } },
-    { id: 201, doctorId: 1, service: 'Signature HydraFacial', date: day(-20), time: '09:00', branch: 'Addis Ababa – Bole', status: 'completed', note: 'Dull, dry skin before a wedding.', payment: { amount: 4500, status: 'paid', method: 'Telebirr', txRef: 'CHP-7K2M9QX1', paidOn: day(-20) } },
-    { id: 204, doctorId: 3, service: 'Hair Restoration Solutions', date: day(-6), time: '14:30', branch: 'Addis Ababa – Kazanchis', status: 'declined', note: 'Consultation only.', payment: { amount: 45000, status: 'unpaid' } },
+    { id: 202, doctorId: 1, service: 'Morpheus8 & Microneedling', date: day(2), time: '11:30', branch: 'Addis Ababa', status: 'approved', note: 'Acne scars on cheeks.', payment: { amount: 12000, status: 'unpaid' } },
+    { id: 203, doctorId: 2, service: 'HIFU Face & Neck Lift', date: day(5), time: '10:00', branch: 'Addis Ababa', status: 'pending', note: '', payment: { amount: 15000, status: 'unpaid' } },
+    { id: 201, doctorId: 1, service: 'Signature HydraFacial', date: day(-20), time: '09:00', branch: 'Addis Ababa', status: 'completed', note: 'Dull, dry skin before a wedding.', payment: { amount: 4500, status: 'paid', method: 'Telebirr', txRef: 'CHP-7K2M9QX1', paidOn: day(-20) } },
+    { id: 204, doctorId: 3, service: 'Hair Restoration Solutions', date: day(-6), time: '14:30', branch: 'Adama', status: 'declined', note: 'Consultation only.', payment: { amount: 45000, status: 'unpaid' } },
     { id: 205, doctorId: 1, service: 'Online Consultation', online: true, date: day(4), time: '16:00', status: 'approved', note: 'Follow-up on dryness after the HydraFacial — I will show my skin on camera.', link: 'meet.lavish.et/LV-205',
       payment: { amount: 4000, status: 'paid', method: 'Telebirr', txRef: 'CHP-Q3N8VD5E', paidOn: day(-1) } },
     { id: 206, doctorId: null, service: 'Online Consultation', online: true, date: day(6), time: '14:00', status: 'pending', note: 'Hair thinning at the crown — is PRP right for me?', payment: { amount: 4000, status: 'unpaid' } },
@@ -105,8 +105,8 @@ export const state = reactive({
 
   // The General Manager tracks these in the web app.
   complaints: [
-    { id: 702, category: 'Appointment', subject: 'Long waiting time', message: 'I waited 40 minutes past my appointment time at Bole.', priority: 'medium', status: 'in-review', date: day(-4), ref: 'Appointment #201',
-      reply: 'Sorry for the wait, Tigist. We are reviewing scheduling at Bole and will update you within 2 days.' },
+    { id: 702, category: 'Appointment', subject: 'Long waiting time', message: 'I waited 40 minutes past my appointment time at the Addis Ababa branch.', priority: 'medium', status: 'in-review', date: day(-4), ref: 'Appointment #201',
+      reply: 'Sorry for the wait, Tigist. We are reviewing scheduling at our Addis Ababa branch and will update you within 2 days.' },
     { id: 703, category: 'Order', subject: 'Wrong item delivered', message: 'I ordered the Hydra Cream but received the serum.', priority: 'low', status: 'resolved', date: day(-9), ref: 'Order #9003',
       reply: 'Replacement delivered. Apologies for the mix-up!' },
   ],
@@ -121,7 +121,7 @@ export const state = reactive({
     teacher: [
       { from: 'them', text: 'Welcome to Foundations, Eden! I’m Dr. Meron, your teacher for this course.', time: 'Sep 1' },
       { from: 'me', text: 'Thank you! Can I reschedule Friday’s practical?', time: 'Yesterday' },
-      { from: 'them', text: 'Yes — I moved you to Saturday 10:00, Bole training room.', time: 'Yesterday' },
+      { from: 'them', text: 'Yes — I moved you to Saturday 10:00, Addis Ababa training room.', time: 'Yesterday' },
     ],
   },
 
@@ -137,16 +137,16 @@ export const state = reactive({
   ],
 
   courses: [
-    { id: 1, teacherIds: [1], title: 'Medical Aesthetics Foundations', weeks: 8, price: 35000, level: 'Beginner', mode: 'In person · Bole', start: day(28), hue: 185,
+    { id: 1, teacherIds: [1], title: 'Medical Aesthetics Foundations', weeks: 8, price: 35000, level: 'Beginner', mode: 'In person · Addis Ababa', start: day(28), hue: 185,
       about: 'The essential start for a career in medical aesthetics: skin science, hygiene, consultations and core treatments.',
       modules: ['Skin anatomy & types', 'Hygiene & infection control', 'Client consultation', 'Facials & extractions', 'Chemical peels', 'Microdermabrasion', 'Aftercare & product advice', 'Final practical exam'] },
-    { id: 2, teacherIds: [1, 2], title: 'HydraFacial & Skin Analysis', weeks: 4, price: 18000, level: 'Intermediate', mode: 'In person · Bole', start: day(14), hue: 200,
+    { id: 2, teacherIds: [1, 2], title: 'HydraFacial & Skin Analysis', weeks: 4, price: 18000, level: 'Intermediate', mode: 'In person · Addis Ababa', start: day(14), hue: 200,
       about: 'Hands-on training on HydraFacial systems and digital skin analysis.',
       modules: ['Skin analysis devices', 'HydraFacial protocol', 'Boosters & add-ons', 'Practical assessment'] },
-    { id: 3, teacherIds: [2], title: 'Injectables: Botox & Fillers', weeks: 6, price: 52000, level: 'Advanced', mode: 'In person · Bole', start: day(45), hue: 25, requirement: 'For licensed doctors and nurses only',
+    { id: 3, teacherIds: [2], title: 'Injectables: Botox & Fillers', weeks: 6, price: 52000, level: 'Advanced', mode: 'In person · Addis Ababa', start: day(45), hue: 25, requirement: 'For licensed doctors and nurses only',
       about: 'Advanced injection techniques with live-model practice under supervision.',
       modules: ['Facial anatomy', 'Neurotoxins', 'Hyaluronic fillers', 'Complications', 'Live-model practice', 'Certification'] },
-    { id: 4, teacherIds: [3], title: 'Laser Hair Removal Technician', weeks: 5, price: 28000, level: 'Beginner', mode: 'In person · Kazanchis', start: day(21), hue: 160,
+    { id: 4, teacherIds: [3], title: 'Laser Hair Removal Technician', weeks: 5, price: 28000, level: 'Beginner', mode: 'In person · Adama', start: day(21), hue: 160,
       about: 'Learn laser physics, safety and treatment for all skin types.',
       modules: ['Laser physics & safety', 'Skin typing', 'Treatment protocols', 'Practical sessions', 'Certification'] },
   ],
@@ -170,7 +170,7 @@ export const state = reactive({
 
   // Posted by the CEO or General Manager in the web app; shown on the client Home screen.
   news: [
-    { id: 1, title: 'New: Morpheus8 now at Kazanchis', body: 'Our most requested skin-tightening treatment is now available at the Kazanchis branch. Book it from the app with Dr. Meron or Dr. Yonas.', tag: 'New treatment', date: day(-1), hue: 185, icon: 'auto_awesome' },
+    { id: 1, title: 'New: Morpheus8 now at Adama', body: 'Our most requested skin-tightening treatment is now available at the Adama branch. Book it from the app with Dr. Meron or Dr. Yonas.', tag: 'New treatment', date: day(-1), hue: 185, icon: 'auto_awesome' },
     { id: 2, title: '20% off aftercare this week', body: 'All Aftercare products are 20% off in the Lavish shop until Sunday. The discount is applied automatically at checkout.', tag: 'Offer', date: day(-3), hue: 25, icon: 'sell' },
     { id: 3, title: 'Lavish Academy: December intake', body: 'Enrolment for the December Medical Aesthetics Foundations intake is open. Visit the academy or call us to register — we’ll give you your student login.', tag: 'Academy', date: day(-6), hue: 160, icon: 'school' },
   ],

@@ -40,7 +40,7 @@ const actions = [
           <div class="bottom">
             <span><span class="ms">calendar_today</span>{{ fmtDate(next.date) }}</span>
             <span><span class="ms">schedule</span>{{ next.time }}</span>
-            <span class="ellip"><span class="ms">{{ next.online ? 'videocam' : 'location_on' }}</span>{{ next.online ? 'Online' : next.branch.replace('Addis Ababa – ', '') }}</span>
+            <span class="ellip"><span class="ms">{{ next.online ? 'videocam' : 'location_on' }}</span>{{ next.online ? 'Online' : next.branch }}</span>
           </div>
         </div>
 

@@ -36,7 +36,7 @@ const explore = computed(() => state.courses.filter((c) => !enrollment(c.id)))
             <h4>Chemical peels — hands-on</h4>
             <div class="muted small">Trainer: Dr. Meron Alemu</div>
           </div>
-          <div class="bottom"><span><span class="ms">calendar_today</span>Sat</span><span><span class="ms">schedule</span>10:00</span><span><span class="ms">location_on</span>Bole training room</span></div>
+          <div class="bottom"><span><span class="ms">calendar_today</span>Sat</span><span><span class="ms">schedule</span>10:00</span><span><span class="ms">location_on</span>Addis Ababa training room</span></div>
         </div>
 
         <button v-if="cert" class="card row mt12" style="width: 100%; text-align: left; background: var(--gold-soft); border-color: #ead8cc" @click="go('certificate', { id: cert.courseId })">
