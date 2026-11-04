@@ -128,8 +128,15 @@ export const FLOWS = [
     { s: 'appointment', label: 'Appointment · completed', params: { id: 201 }, note: 'After treatment, chat with the doctor unlocks and “Book again” is offered.', web: 'Doctor marks the appointment complete in the web app.' },
     { s: 'appointment', label: 'Appointment · declined', params: { id: 204 }, note: 'Reception declined — client is prompted to pick another slot.' },
   ] },
+  { group: 'Client · Online session', icon: 'video_call', items: [
+    { s: 'book', label: 'Book · online session', params: { doctorId: null, online: true, time: '14:00' }, note: '45-minute video consultation for ETB 4,000. The client switches “At the clinic / Online”, picks a doctor (or lets reception match one), a date and time, and says what they want to discuss. Entry points: Home banner, Doctors list and each doctor’s treatment list.', web: 'Arrives in Reception → Appointments marked 🎥 Online, under the “online” tab.' },
+    { s: 'book-review', label: 'Review · online session', params: { doctorId: 1, online: true, time: '16:00', note: 'Follow-up on dryness after my HydraFacial.' }, note: 'No branch — the session is a video call in the app. Pay now, or pay in the app after reception confirms. There is no “pay at reception” for online sessions.', web: 'Sending creates a PENDING online appointment for reception to confirm.' },
+    { s: 'success', label: 'Online request sent', params: SUCCESS.booking({ ...state.appointments.find((a) => a.id === 206), doctorId: 1 }), note: 'Timeline: reception confirms → client pays → video call.' },
+    { s: 'appointment', label: 'Online · waiting for reception', params: { id: 206 }, note: 'Pending until the receptionist confirms the slot. The client can cancel or pay early.', web: 'Reception → Appointments → “Confirm online session” (or assign a doctor first if the client didn’t pick one).' },
+    { s: 'appointment', label: 'Online · confirmed & paid', params: { id: 205 }, note: 'Confirmed by reception and paid, so the video link is unlocked and “Join video call” is shown. If unpaid, the link stays locked and the footer asks the client to pay.', web: 'Confirming creates the video link and a payment request in Reception → Payments; the doctor sees the session in their schedule.' },
+  ] },
   { group: 'Client · Payments', icon: 'payments', items: [
-    { s: 'pay', label: 'Pay for appointment', params: { id: 202 }, note: 'Telebirr, CBE Birr or card via Chapa — or choose to pay cash at reception.', web: 'Appointment payments show in Reception → Payments; reception marks cash payments as paid.' },
+    { s: 'pay', label: 'Pay for appointment', params: { id: 202 }, note: 'Telebirr, CBE Birr or card via Chapa — or choose to pay cash at reception (not offered for online sessions).', web: 'Appointment payments show in Reception → Payments; reception marks cash payments as paid.' },
     { s: 'success', label: 'Payment receipt', params: SUCCESS.payment(state.appointments[2]), note: 'Receipt with Chapa transaction reference.' },
     { s: 'payments', label: 'Payment history', note: 'Outstanding vs paid totals and all appointment payments.' },
   ] },

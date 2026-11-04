@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { state, go, slug } from '../store'
+import { state, go, slug, etb, ONLINE } from '../store'
 import AppBar from '../components/AppBar.vue'
 import Avatar from '../components/Avatar.vue'
 
@@ -27,6 +27,12 @@ const list = computed(() => state.doctors.filter((d) =>
       <button class="card row mt16" style="width: 100%; text-align: left; border-style: dashed" @click="go('book', { doctorId: null, service })">
         <span class="ic gold"><span class="ms">auto_awesome</span></span>
         <span class="grow"><b style="font-weight: 500">Not sure who to see?</b><small class="muted" style="display: block">Book a treatment and reception will match you with the best available doctor.</small></span>
+        <span class="ms muted">chevron_right</span>
+      </button>
+
+      <button class="card row mt8" style="width: 100%; text-align: left; border-style: dashed" @click="go('book', { doctorId: null, online: true })">
+        <span class="ic"><span class="ms">video_call</span></span>
+        <span class="grow"><b style="font-weight: 500">Consult a doctor online</b><small class="muted" style="display: block">45-min video call from home · {{ etb(ONLINE.price) }}. Reception confirms your slot.</small></span>
         <span class="ms muted">chevron_right</span>
       </button>
 

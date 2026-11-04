@@ -17,10 +17,10 @@ npm run dev        # open the URL Vite prints
 
 | Role | Features |
 |---|---|
-| Client | Register (phone + OTP) · doctors list · book appointment (or let reception choose) · approval status · pay (Telebirr / CBE Birr / Chapa / cash at reception) · chat with doctor (unlocked after first treatment) · prescriptions · shop, cart, checkout, order tracking · complaints · notifications · profile |
+| Client | Register (phone + OTP) · doctors list · book appointment (or let reception choose) · book a 45-min online video session (ETB 4,000) · approval status · pay (Telebirr / CBE Birr / Chapa / cash at reception) · chat with doctor (unlocked after first treatment) · prescriptions · shop, cart, checkout, order tracking · complaints · notifications · profile |
 | Student | Register · course catalogue · course detail · apply · application status · my course (progress, sessions, materials) · chat with CTO · profile |
 
-Web-app counterparts (`lavish_front`): reception approves appointments and records payments; doctors see clients and chat; admin adds products and confirms delivery; CTO tracks complaints and approves students.
+Web-app counterparts (`lavish_front`): reception approves appointments, confirms online sessions and records payments; doctors see clients and chat; admin adds products and confirms delivery; CTO tracks complaints and approves students.
 
 ## Design tokens (same as the web app)
 

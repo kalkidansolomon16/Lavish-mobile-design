@@ -1,5 +1,5 @@
 <script setup>
-import { state, go, back, doctor, service, etb, canChat, notify } from '../store'
+import { state, go, back, doctor, service, etb, canChat, notify, ONLINE } from '../store'
 import Avatar from '../components/Avatar.vue'
 
 const p = defineProps({ params: Object })
@@ -32,6 +32,11 @@ const chat = () => (canChat(d.id) ? go('chat', { key: d.id }) : notify('Chat unl
             <span class="ic sm"><span class="ms">{{ s.icon }}</span></span>
             <span class="grow"><b>{{ s.name }}</b><small>{{ s.mins }} min</small></span>
             <span class="price" style="font-size: 16px">{{ etb(s.price) }}</span>
+          </button>
+          <button class="li" @click="go('book', { doctorId: d.id, online: true })">
+            <span class="ic sm gold"><span class="ms">{{ ONLINE.icon }}</span></span>
+            <span class="grow"><b>{{ ONLINE.name }}</b><small>{{ ONLINE.mins }} min · video call from home</small></span>
+            <span class="price" style="font-size: 16px">{{ etb(ONLINE.price) }}</span>
           </button>
         </div>
 
