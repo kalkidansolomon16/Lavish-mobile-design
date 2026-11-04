@@ -23,8 +23,8 @@ const count = (t) => state.appointments.filter((a) => TABS[t].includes(a.status)
           <div class="row top">
             <span class="ic"><span class="ms">{{ service(a.service).icon }}</span></span>
             <div class="grow">
-              <div class="row between top"><b style="font-weight: 500; font-size: 15px">{{ a.service }}</b><span class="badge" :class="a.status">{{ a.status }}</span></div>
-              <div class="muted small mt4">{{ a.doctorId ? doctor(a.doctorId).name : 'Doctor to be assigned' }}</div>
+              <div class="row between top"><b style="font-weight: 500; font-size: 15px">{{ a.online ? 'Online consultation' : a.service }}</b><span class="badge" :class="a.status">{{ a.status }}</span></div>
+              <div class="muted small mt4">{{ a.doctorId ? doctor(a.doctorId).name : 'Doctor to be assigned' }}<template v-if="a.online"> · <span class="ms" style="font-size: 13px; vertical-align: -2px">videocam</span> Video call · 45 min</template></div>
               <div class="meta mt8">
                 <span><span class="ms">calendar_today</span>{{ fmtDate(a.date) }}</span>
                 <span><span class="ms">schedule</span>{{ a.time }}</span>

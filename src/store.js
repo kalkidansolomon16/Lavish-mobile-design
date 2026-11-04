@@ -35,7 +35,12 @@ export const SERVICES = [
   { name: 'Hair Restoration Solutions', price: 45000, mins: 240, icon: 'face' },
   { name: 'Body Contouring & Skin Tightening', price: 20000, mins: 120, icon: 'accessibility_new' },
 ]
-export const service = (n) => SERVICES.find((s) => s.name === n) ?? { name: n, price: 0, mins: 60, icon: 'spa' }
+// Online consultation — a 45-minute video call with a Lavish doctor. Not tied to a branch, so it isn't in SERVICES.
+// Reception confirms the request in the web app; the video link arrives in the app once it's confirmed.
+export const ONLINE = { name: 'Online Consultation', price: 4000, mins: 45, icon: 'video_call' }
+export const service = (n) => (n === ONLINE.name ? ONLINE : SERVICES.find((s) => s.name === n)) ?? { name: n, price: 0, mins: 60, icon: 'spa' }
+// Where the appointment happens, for cards and summaries.
+export const placeOf = (a) => (a.online ? 'Online · video call' : a.branch)
 
 export const state = reactive({
   role: 'client',
@@ -63,6 +68,9 @@ export const state = reactive({
     { id: 203, doctorId: 2, service: 'HIFU Face & Neck Lift', date: day(5), time: '10:00', branch: 'Addis Ababa – Bole', status: 'pending', note: '', payment: { amount: 15000, status: 'unpaid' } },
     { id: 201, doctorId: 1, service: 'Signature HydraFacial', date: day(-20), time: '09:00', branch: 'Addis Ababa – Bole', status: 'completed', note: 'Dull, dry skin before a wedding.', payment: { amount: 4500, status: 'paid', method: 'Telebirr', txRef: 'CHP-7K2M9QX1', paidOn: day(-20) } },
     { id: 204, doctorId: 3, service: 'Hair Restoration Solutions', date: day(-6), time: '14:30', branch: 'Addis Ababa – Kazanchis', status: 'declined', note: 'Consultation only.', payment: { amount: 45000, status: 'unpaid' } },
+    { id: 205, doctorId: 1, service: 'Online Consultation', online: true, date: day(4), time: '16:00', status: 'approved', note: 'Follow-up on dryness after the HydraFacial — I will show my skin on camera.', link: 'meet.lavish.et/LV-205',
+      payment: { amount: 4000, status: 'paid', method: 'Telebirr', txRef: 'CHP-Q3N8VD5E', paidOn: day(-1) } },
+    { id: 206, doctorId: null, service: 'Online Consultation', online: true, date: day(6), time: '14:00', status: 'pending', note: 'Hair thinning at the crown — is PRP right for me?', payment: { amount: 4000, status: 'unpaid' } },
   ],
 
   products: [
@@ -118,6 +126,7 @@ export const state = reactive({
   },
 
   notifications: [
+    { id: 8, icon: 'video_call', title: 'Online session confirmed', text: 'Your 45-min video consultation with Dr. Meron Alemu on ' + fmtDate(day(4)) + ' at 16:00 is confirmed. Join from the app.', time: '1d ago', unread: false, to: 'appointment', params: { id: 205 } },
     { id: 1, icon: 'event_available', title: 'Appointment approved', text: 'Morpheus8 on ' + fmtDate(day(2)) + ' at 11:30 is confirmed. Dr. Meron Alemu has been notified.', time: '2h ago', unread: true, to: 'appointment', params: { id: 202 } },
     { id: 2, icon: 'medication', title: 'New prescription', text: 'Dr. Meron Alemu sent you 2 products for your skin routine.', time: 'Yesterday', unread: true, to: 'prescription', params: { id: 1 } },
     { id: 3, icon: 'chat', title: 'Dr. Meron Alemu', text: 'Mild dryness is normal for 48h…', time: 'Mon', unread: false, to: 'chat', params: { key: 1 } },
@@ -194,8 +203,10 @@ const REPLIES = {
 }
 
 export const actions = {
-  book({ doctorId, service: s, date, time, branch, note }) {
-    const a = { id: 300 + state.appointments.length, doctorId, service: s, date, time, branch, note, status: 'pending', payment: { amount: service(s).price, status: 'unpaid' } }
+  book({ doctorId, service: s, date, time, branch, note, online }) {
+    const a = online
+      ? { id: 300 + state.appointments.length, doctorId, service: ONLINE.name, online: true, date, time, note, status: 'pending', payment: { amount: ONLINE.price, status: 'unpaid' } }
+      : { id: 300 + state.appointments.length, doctorId, service: s, date, time, branch, note, status: 'pending', payment: { amount: service(s).price, status: 'unpaid' } }
     state.appointments.unshift(a)
     return a
   },
@@ -243,7 +254,18 @@ export const actions = {
 
 // Content for the shared "success" screen after each flow.
 export const SUCCESS = {
-  booking: (a) => ({
+  booking: (a) => a.online ? {
+    icon: 'video_call', title: 'Request sent!',
+    text: `Your 45-minute online consultation request was sent to reception. We'll notify you as soon as it's confirmed.`,
+    steps: [
+      { t: 'Request sent', d: 'Just now', done: true },
+      { t: 'Reception confirms', d: 'Usually within 2 hours', now: true },
+      { t: a.payment.status === 'paid' ? 'Paid · video link sent' : `Pay ${etb(a.payment.amount)} · get your video link`, d: a.payment.status === 'paid' ? a.payment.method : 'Telebirr, CBE Birr or card', done: a.payment.status === 'paid' },
+      { t: 'Video call with ' + (a.doctorId ? doctor(a.doctorId).name : 'your doctor'), d: `${fmtDate(a.date)} · ${a.time} · 45 min` },
+    ],
+    primary: { label: 'View appointment', to: 'appointment', params: { id: a.id } },
+    secondary: { label: 'Back to home' },
+  } : ({
     icon: 'event_available', title: 'Request sent!',
     text: `Your ${a.service} request was sent to reception. We'll notify you as soon as it's approved.`,
     steps: [

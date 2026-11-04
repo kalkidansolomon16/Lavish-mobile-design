@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { state, go, doctor, fmtDate, SERVICES, etb } from '../store'
+import { state, go, doctor, fmtDate, SERVICES, ONLINE, etb } from '../store'
 import Avatar from '../components/Avatar.vue'
 import ProductArt from '../components/ProductArt.vue'
 
@@ -40,17 +40,23 @@ const actions = [
           <div class="bottom">
             <span><span class="ms">calendar_today</span>{{ fmtDate(next.date) }}</span>
             <span><span class="ms">schedule</span>{{ next.time }}</span>
-            <span class="ellip"><span class="ms">location_on</span>{{ next.branch.replace('Addis Ababa – ', '') }}</span>
+            <span class="ellip"><span class="ms">{{ next.online ? 'videocam' : 'location_on' }}</span>{{ next.online ? 'Online' : next.branch.replace('Addis Ababa – ', '') }}</span>
           </div>
         </div>
 
         <button v-if="pending" class="banner warn mt12" style="width: 100%; text-align: left" @click="go('appointments', { tab: 'requests' })">
-          <span class="ms">hourglass_top</span><span class="grow"><b>{{ pending }} request waiting</b> for reception to approve</span><span class="ms">chevron_right</span>
+          <span class="ms">hourglass_top</span><span class="grow"><b>{{ pending }} request{{ pending > 1 ? 's' : '' }} waiting</b> for reception to approve</span><span class="ms">chevron_right</span>
         </button>
 
         <div class="tiles mt20">
           <button v-for="a in actions" :key="a.label" class="tile" @click="go(a.to)"><span class="ic"><span class="ms">{{ a.icon }}</span></span>{{ a.label }}</button>
         </div>
+
+        <button class="promo teal-head mt20" style="width: 100%; text-align: left; padding: 18px" @click="go('book', { doctorId: null, online: true })">
+          <span class="ic" style="background: rgba(255,255,255,.14); color: #fff; width: 52px; height: 52px; border-radius: 16px"><span class="ms" style="font-size: 28px">{{ ONLINE.icon }}</span></span>
+          <span class="grow"><h4>See a doctor online</h4><p>{{ ONLINE.mins }}-min video consultation from home · {{ etb(ONLINE.price) }}</p></span>
+          <span class="ms">chevron_right</span>
+        </button>
 
         <button v-if="rx" class="card row mt20" style="width: 100%; text-align: left; background: var(--gold-soft); border-color: #ead8cc" @click="go('prescription', { id: rx.id })">
           <span class="ic gold" style="background: #fff"><span class="ms">medication</span></span>
